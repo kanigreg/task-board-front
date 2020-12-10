@@ -5,7 +5,5 @@
   </button>
 </mat-toolbar>
 <div class="content">
-  <app-card></app-card>
-  <app-card></app-card>
-  <app-card></app-card>
+  <app-card *ngFor="let project of projects" [project]="project"></app-card>
 </div>

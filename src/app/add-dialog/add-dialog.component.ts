@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-export interface Todo {
-  text: string,
-  project_id: number,
-}
+import { TodoService } from '../todo.service';
+import { Project } from '../project';
 
-export interface Project {
-  id: number,
-  title: string
+export interface DialogData {
+  projects: Project[]
 }
 
 @Component({
@@ -20,14 +17,12 @@ export interface Project {
 export class AddDialogComponent implements OnInit {
 
   addTodoForm: FormGroup;
-  projects: Project[] = [
-    {title: 'Project', id: 0},
-    {title: 'Home', id: 1}
-  ]
-
 
   constructor(
-    public dialogRef: MatDialogRef<AddDialogComponent>, private fb: FormBuilder) {}
+    public dialogRef: MatDialogRef<AddDialogComponent>, 
+    private fb: FormBuilder,
+    private todoService: TodoService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit(): void {
     this.initForm()
@@ -35,10 +30,10 @@ export class AddDialogComponent implements OnInit {
 
   initForm(): void {
     this.addTodoForm = this.fb.group({
-      todo: ['', [
+      text: ['', [
         Validators.required
       ]],
-      project: [null, [
+      projectId: [null, [
         Validators.required
       ]]
     });
@@ -54,7 +49,7 @@ export class AddDialogComponent implements OnInit {
       return;
     }
 
-    console.log(this.addTodoForm.value);
+    this.todoService.create(this.addTodoForm.value);
     this.close();
   }
 

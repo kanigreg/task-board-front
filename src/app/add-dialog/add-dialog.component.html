@@ -3,13 +3,13 @@
 
     <mat-form-field>
       <mat-label>Название задачи...</mat-label>
-      <input matInput type="text" name="todo" formControlName="todo">
+      <input matInput type="text" name="text" formControlName="text">
     </mat-form-field>
     
     <mat-form-field>
       <mat-label>Категория</mat-label>
-      <mat-select formControlName="project" name="project">
-        <mat-option *ngFor="let item of projects" [value]="item.id">
+      <mat-select formControlName="projectId" name="projectId">
+        <mat-option *ngFor="let item of data.projects" [value]="item.id">
           {{item.title}}
         </mat-option>
       </mat-select>

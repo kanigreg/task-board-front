@@ -1,3 +1,9 @@
 <section class="todo">
-  <mat-checkbox>Todo description</mat-checkbox>
+  <mat-checkbox
+    [checked]="todo.isCompleted"
+    [id]="todo.id"
+    (change)="changeHandler($event)"
+  >
+    {{todo.text}}
+  </mat-checkbox>
 </section>
