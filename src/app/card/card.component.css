@@ -1,0 +1,13 @@
+.card {
+  min-width: 380px;
+}
+
+.card__header {
+  border-bottom: rgba(200, 200, 200, 0.5) 1px solid;
+  margin: 0;
+}
+
+.card__title {
+  text-transform: uppercase;
+  font-size: small;
+}

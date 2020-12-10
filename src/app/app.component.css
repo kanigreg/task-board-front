@@ -1,0 +1,14 @@
+.toolbar{
+  background-color: dodgerblue;
+  margin-bottom: 3rem;
+}
+
+.toolbar__title {
+  flex: auto;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+}

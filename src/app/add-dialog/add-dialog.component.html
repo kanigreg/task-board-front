@@ -1,0 +1,22 @@
+<div mat-dialog-content>
+  <form [formGroup]="addTodoForm" (submit)="onSubmit()">
+
+    <mat-form-field>
+      <mat-label>Название задачи...</mat-label>
+      <input matInput type="text" name="todo" formControlName="todo">
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Категория</mat-label>
+      <mat-select formControlName="project" name="project">
+        <mat-option *ngFor="let item of projects" [value]="item.id">
+          {{item.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-button (click)="close()">Отмена</button>
+    <button mat-button type="submit">Ок</button>
+
+  </form>
+</div>
