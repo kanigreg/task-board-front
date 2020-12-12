@@ -18,8 +18,8 @@ export class TodoComponent implements OnInit {
   }
 
   changeHandler({ checked }): void {
-    this.todo.isCompleted = checked;
-    this.todoService.update(this.todo).subscribe();
+    this.todoService.update(this.todo)
+      .subscribe(_ => this.todo.isCompleted = checked);
   } 
 
 }
