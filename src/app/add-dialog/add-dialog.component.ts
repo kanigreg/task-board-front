@@ -1,9 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { TodoService } from '../todo.service';
-import { Project } from '../project';
+import { Todo } from 'src/models/todo';
+import { Project } from 'src/models/project';
 
 export interface DialogData {
   projects: Project[]
@@ -21,7 +21,6 @@ export class AddDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddDialogComponent>, 
     private fb: FormBuilder,
-    private todoService: TodoService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit(): void {
@@ -49,12 +48,11 @@ export class AddDialogComponent implements OnInit {
       return;
     }
 
-    this.todoService.create(this.addTodoForm.value);
-    this.close();
+    this.close(this.addTodoForm.value);
   }
 
-  close(): void {
-    this.dialogRef.close();
+  close(result?: any): void {
+    this.dialogRef.close(result);
   }
 
 }

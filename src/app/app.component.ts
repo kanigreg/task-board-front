@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { plainToClass } from 'class-transformer';
+
 import { AddDialogComponent } from "./add-dialog/add-dialog.component";
-import { Project } from './project';
-import { ProjectService } from './project.service';
+import { Project } from '../models/project';
+import { ProjectService } from '../services/project.service';
+import { Todo } from 'src/models/todo';
+import { TodoService } from 'src/services/todo.service';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +18,27 @@ export class AppComponent implements OnInit {
   todo: string;
   projects: Project[]
 
-  constructor(public dialog: MatDialog, private projectService: ProjectService,) { }
+  constructor(
+    public dialog: MatDialog, 
+    private projectService: ProjectService,
+    private todoService: TodoService
+  ) { }
 
   ngOnInit(): void {
     this.getProjects();
   }
 
   getProjects(): void {
-    this.projects = this.projectService.getProjects();   
+    this.projectService.getProjects()
+      .subscribe(projects => {
+        console.log(projects)
+        this.projects = projects});
+  }
+
+  addTaskHandler(data: any) {
+    const todo = plainToClass(Todo, data);
+    this.todoService.create(todo)
+      .subscribe(_ => this.getProjects())
   }
 
   openDialog(): void {
@@ -30,8 +47,10 @@ export class AppComponent implements OnInit {
       data: {projects: this.projects}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    dialogRef.afterClosed().subscribe((data) => {
+      if(data){
+        this.addTaskHandler(data)
+      }
     });
   }
 }
