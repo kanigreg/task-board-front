@@ -1,3 +1,7 @@
 .todo {
   margin-top: 1.5rem;
 }
+
+.todo__text {
+  text-decoration: line-through;
+}

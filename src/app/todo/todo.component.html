@@ -4,6 +4,8 @@
     [id]="todo.id"
     (change)="changeHandler($event)"
   >
-    {{todo.text}}
+    <span [ngClass]="{todo__text: todo.isCompleted}">
+      {{todo.text}}
+    </span>
   </mat-checkbox>
 </section>
