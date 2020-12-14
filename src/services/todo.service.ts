@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Todo } from "../models/todo";
 
@@ -21,9 +21,10 @@ export class TodoService {
     const url = this.urls.update(todo.projectId, todo.id);
     const body = classToPlain(todo);
 
-    return this.http.patch<Todo>(url, body)
+    return this.http.patch<any>(url, body)
       .pipe(
-        catchError(this.handleError<Todo>('update todo'))
+        map(({ todo }) => plainToClass(Todo, todo)),
+        catchError(this.handleError<any>('update todo'))
       );
   }
 
@@ -31,9 +32,10 @@ export class TodoService {
     const url = this.urls.create();
     const body = classToPlain(todo);
     
-    return this.http.post<Todo>(url, body)
+    return this.http.post<any>(url, body)
       .pipe(
-        catchError(this.handleError<Todo>('update todo'))
+        map(({ todo }) => plainToClass(Todo, todo)),
+        catchError(this.handleError<any>('create todo'))
       );
   }
 

@@ -38,7 +38,10 @@ export class AppComponent implements OnInit {
   addTaskHandler(data: any) {
     const todo = plainToClass(Todo, data);
     this.todoService.create(todo)
-      .subscribe(_ => this.getProjects())
+      .subscribe(newTodo => {
+        const project = this.projects.find(project => project.id === newTodo.projectId);
+        project.todos.push(newTodo);
+      })
   }
 
   openDialog(): void {
