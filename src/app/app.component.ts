@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
   getProjects(): void {
     this.projectService.getProjects()
       .subscribe(projects => {
-        console.log(projects)
         this.projects = projects});
   }
 
   addTaskHandler(data: any) {
     const todo = plainToClass(Todo, data);
+    todo.isCompleted = false;
     this.todoService.create(todo)
       .subscribe(newTodo => {
         const project = this.projects.find(project => project.id === newTodo.projectId);

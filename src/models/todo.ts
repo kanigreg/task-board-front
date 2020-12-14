@@ -11,5 +11,5 @@ export class Todo {
   text: string;
   
   @Expose({ name: 'is_completed' })
-  isCompleted?: boolean;
+  isCompleted: boolean;
 }
