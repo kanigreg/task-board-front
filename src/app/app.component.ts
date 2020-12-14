@@ -39,8 +39,19 @@ export class AppComponent implements OnInit {
     todo.isCompleted = false;
     this.todoService.create(todo)
       .subscribe(newTodo => {
-        const project = this.projects.find(project => project.id === newTodo.projectId);
-        project.todos.push(newTodo);
+        const project = this.projects.find(
+          project => project.id === newTodo.projectId
+        );
+        if (project) {
+          project.todos.push(newTodo);
+        } else {
+          const newProject: Project = {
+            id: newTodo.projectId,
+            title: todo.projectTitle,
+            todos: [newTodo]
+          }
+          this.projects.push(newProject)
+        }
       })
   }
 

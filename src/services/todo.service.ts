@@ -31,7 +31,7 @@ export class TodoService {
   create(todo: Todo): Observable<Todo> {
     const url = this.urls.create();
     const body = classToPlain(todo);
-    
+
     return this.http.post<any>(url, body)
       .pipe(
         map(({ todo }) => plainToClass(Todo, todo)),

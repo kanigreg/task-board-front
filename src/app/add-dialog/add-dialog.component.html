@@ -9,11 +9,19 @@
     <mat-form-field>
       <mat-label>Категория</mat-label>
       <mat-select formControlName="projectId" name="projectId">
+        <mat-option [value]="NEW_CATEGORY">Новая категория</mat-option>
         <mat-option *ngFor="let item of data.projects" [value]="item.id">
           {{item.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+  
+    <div *ngIf="this.addTodoForm.controls.projectId.value === NEW_CATEGORY">
+      <mat-form-field>
+        <mat-label>Название категории</mat-label>
+        <input matInput type="text" name="projectTitle" formControlName="projectTitle">
+      </mat-form-field>
+    </div>
 
     <button mat-button (click)="close()">Отмена</button>
     <button mat-button type="submit">Ок</button>

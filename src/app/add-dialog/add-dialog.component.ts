@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { Todo } from 'src/models/todo';
 import { Project } from 'src/models/project';
@@ -17,6 +17,7 @@ export interface DialogData {
 export class AddDialogComponent implements OnInit {
 
   addTodoForm: FormGroup;
+  NEW_CATEGORY = '__NEW_CATEGORY__'
 
   constructor(
     public dialogRef: MatDialogRef<AddDialogComponent>, 
@@ -34,7 +35,8 @@ export class AddDialogComponent implements OnInit {
       ]],
       projectId: [null, [
         Validators.required
-      ]]
+      ]],
+      projectTitle: ['']
     });
   }
 
