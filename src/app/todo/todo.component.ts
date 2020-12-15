@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { classToClass } from 'class-transformer';
 
 import { Todo } from '../../models/todo';
 import { TodoService } from '../../services/todo.service';
@@ -18,11 +19,11 @@ export class TodoComponent implements OnInit {
   }
 
   changeHandler({ checked }): void {
-    this.todo.isCompleted = checked;
-    this.todoService.update(this.todo)
+    const updatedTodo = classToClass(this.todo)
+    updatedTodo.isCompleted = checked;
+    this.todoService.update(updatedTodo)
       .subscribe(
-        updatedTodo => this.todo.isCompleted = updatedTodo.isCompleted, 
-        _ => this.todo.isCompleted = !this.todo.isCompleted
+        () => this.todo.isCompleted = checked
       );
   } 
 
