@@ -23,15 +23,16 @@ export class ProjectService {
     return this.http.get<Project[]>(this.urls.getAll())
       .pipe(
         map(res => plainToClass(Project, res)),
-        catchError(this.handleError<Project[]>('get projects'))
+        catchError(this.handleError('get projects', []))
       )
   }
 
-  private handleError<T>(_ = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError(operation = 'operation', result?: Project[]) {
+    return (error: any): Observable<Project[]> => {
+      error.operation = operation;
       console.error(error)
 
-      return of(result as T);
+      return of(result);
     }
   }
 }

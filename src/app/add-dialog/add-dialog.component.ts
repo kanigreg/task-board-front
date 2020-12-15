@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 
 import { Todo } from 'src/models/todo';
 import { Project } from 'src/models/project';
+import { plainToClass } from 'class-transformer';
 
 export interface DialogData {
   projects: Project[]
@@ -20,7 +21,7 @@ export class AddDialogComponent implements OnInit {
   NEW_CATEGORY = '__NEW_CATEGORY__'
 
   constructor(
-    public dialogRef: MatDialogRef<AddDialogComponent>, 
+    public dialogRef: MatDialogRef<AddDialogComponent, Todo>, 
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
@@ -49,11 +50,13 @@ export class AddDialogComponent implements OnInit {
 
       return;
     }
-
-    this.close(this.addTodoForm.value);
+    
+    const todo = plainToClass(Todo, this.addTodoForm.value);
+    todo.isCompleted = false;
+    this.close(todo);
   }
 
-  close(result?: any): void {
+  close(result?: Todo): void {
     this.dialogRef.close(result);
   }
 

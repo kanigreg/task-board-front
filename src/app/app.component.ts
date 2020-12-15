@@ -34,9 +34,7 @@ export class AppComponent implements OnInit {
         this.projects = projects});
   }
 
-  addTaskHandler(data: any) {
-    const todo = plainToClass(Todo, data);
-    todo.isCompleted = false;
+  addTaskHandler(todo: Todo) {
     this.todoService.create(todo)
       .subscribe(newTodo => {
         const project = this.projects.find(
@@ -61,9 +59,9 @@ export class AppComponent implements OnInit {
       data: {projects: this.projects}
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
-      if(data){
-        this.addTaskHandler(data)
+    dialogRef.afterClosed().subscribe((todo) => {
+      if(todo) {
+        this.addTaskHandler(todo)
       }
     });
   }

@@ -24,7 +24,7 @@ export class TodoService {
     return this.http.patch<any>(url, body)
       .pipe(
         map(({ todo }) => plainToClass(Todo, todo)),
-        catchError(this.handleError<any>('update todo'))
+        catchError(this.handleError('update todo'))
       );
   }
 
@@ -35,15 +35,16 @@ export class TodoService {
     return this.http.post<any>(url, body)
       .pipe(
         map(({ todo }) => plainToClass(Todo, todo)),
-        catchError(this.handleError<any>('create todo'))
+        catchError(this.handleError('create todo'))
       );
   }
 
-  private handleError<T>(_ = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  private handleError(operation = 'operation', result?: Todo) {
+    return (error: any): Observable<Todo> => {
+      error.operation = operation;
       console.error(error)
 
-      return of(result as T);
+      return of(result);
     }
   }
 }
