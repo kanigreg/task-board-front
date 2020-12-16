@@ -3,6 +3,10 @@
     <mat-card-title class="card__title">{{project.title}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <app-todo *ngFor="let todo of project.todos" [todo]="todo"></app-todo>
+    <app-todo 
+      *ngFor="let todo of project.todos; trackBy: helperService.trackById"
+      [todo]="todo"
+    >
+    </app-todo>
   </mat-card-content>
 </mat-card>

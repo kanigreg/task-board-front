@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { plainToClass } from 'class-transformer';
-
 import { AddDialogComponent } from "./add-dialog/add-dialog.component";
 import { Project } from '../models/project';
 import { ProjectService } from '../services/project.service';
 import { Todo } from 'src/models/todo';
 import { TodoService } from 'src/services/todo.service';
+import { HelperService } from 'src/services/helper.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +19,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog, 
+    public helperService: HelperService,
     private projectService: ProjectService,
     private todoService: TodoService
   ) { }

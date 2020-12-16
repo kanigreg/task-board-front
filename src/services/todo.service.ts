@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { classToPlain, plainToClass } from 'class-transformer';
-import { Observable, of } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { Todo } from "../models/todo";
@@ -19,32 +19,32 @@ export class TodoService {
 
   update(todo: Todo): Observable<Todo> {
     const url = this.urls.update(todo.projectId, todo.id);
-    const body = classToPlain(todo);
+    const body = classToPlain(todo, { excludeExtraneousValues: true });
 
-    return this.http.patch<any>(url, body)
+    return this.http.patch<Todo>(url, body)
       .pipe(
-        map(({ todo }) => plainToClass(Todo, todo)),
+        map((todo) => plainToClass(Todo, todo)),
         catchError(this.handleError('update todo'))
       );
   }
 
   create(todo: Todo): Observable<Todo> {
     const url = this.urls.create();
-    const body = classToPlain(todo);
+    const body = classToPlain(todo, { excludeExtraneousValues: true });
 
-    return this.http.post<any>(url, body)
+    return this.http.post<Todo>(url, body)
       .pipe(
-        map(({ todo }) => plainToClass(Todo, todo)),
+        map((todo) => plainToClass(Todo, todo)),
         catchError(this.handleError('create todo'))
       );
   }
 
-  private handleError(operation = 'operation', result?: Todo) {
+  private handleError(operation = 'operation') {
     return (error: any): Observable<Todo> => {
       error.operation = operation;
       console.error(error)
 
-      return of(result);
+      return throwError(operation + ' failed');
     }
   }
 }

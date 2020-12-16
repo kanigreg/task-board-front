@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 
 export class Todo {
   @Exclude({ toPlainOnly: true })
@@ -13,6 +13,6 @@ export class Todo {
   @Expose()
   text: string;
   
-  @Expose({ name: 'is_completed' })
+  @Expose({ name: 'is_completed', toPlainOnly: true })
   isCompleted: boolean;
 }

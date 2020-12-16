@@ -8,18 +8,21 @@
     
     <mat-form-field>
       <mat-label>Категория</mat-label>
-      <mat-select formControlName="projectId" name="projectId">
+      <mat-select formControlName="projectTitle" name="projectTitle">
         <mat-option [value]="NEW_CATEGORY">Новая категория</mat-option>
-        <mat-option *ngFor="let item of data.projects" [value]="item.id">
+        <mat-option 
+          *ngFor="let item of data.projects; trackBy: helperService.trackById"
+          [value]="item.title"
+        >
           {{item.title}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   
-    <div *ngIf="this.addTodoForm.controls.projectId.value === NEW_CATEGORY">
+    <div *ngIf="this.addTodoForm.controls.projectTitle.value === NEW_CATEGORY">
       <mat-form-field>
         <mat-label>Название категории</mat-label>
-        <input matInput type="text" name="projectTitle" formControlName="projectTitle">
+        <input matInput type="text" name="newProjectTitle" formControlName="newProjectTitle">
       </mat-form-field>
     </div>
 

@@ -23,7 +23,7 @@ export class TodoComponent implements OnInit {
     updatedTodo.isCompleted = checked;
     this.todoService.update(updatedTodo)
       .subscribe(
-        () => this.todo.isCompleted = checked
+        (todo) => this.todo.isCompleted = todo.isCompleted,
       );
   } 
 

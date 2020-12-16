@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Project } from '../../models/project';
+import { Project } from 'src/models/project';
+import { HelperService } from 'src/services/helper.service';
 
 @Component({
   selector: 'app-card',
@@ -11,7 +12,7 @@ export class CardComponent implements OnInit {
 
   @Input() project: Project;
 
-  constructor() { }
+  constructor(public helperService: HelperService) { }
 
   ngOnInit(): void {
   }
